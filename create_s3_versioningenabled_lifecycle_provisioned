@@ -3,7 +3,7 @@
   vars_files:
     - keys.yml
   vars:
-    UNIQUE_BUCKET_NAME: ds50421elena
+    UNIQUE_BUCKET_NAME: ds50421
   tasks:
     - name: Create new S3 bucket
       aws_s3:
