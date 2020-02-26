@@ -1,0 +1,27 @@
+- hosts: localhost
+  gather_facts: no
+  vars_files:
+    - keys.yml
+  vars:
+    UNIQUE_BUCKET_NAME: ds50421pol1
+  tasks:
+    - name: Create new S3 bucket
+      aws_s3:
+        aws_access_key: "{{ AWS_ACCESS_KEY_ID }}"
+        aws_secret_key: "{{ AWS_SECRET_ACCESS_KEY }}"
+        ec2_region: "{{ AWS_REGION }}"
+        bucket: "{{ UNIQUE_BUCKET_NAME }}"
+        mode: create
+    - name: Add file to bucket
+      aws_s3:
+        aws_access_key: "{{ AWS_ACCESS_KEY_ID }}"
+        aws_secret_key: "{{ AWS_SECRET_ACCESS_KEY }}"
+        ec2_region: "{{ AWS_REGION }}"
+        bucket: "{{ UNIQUE_BUCKET_NAME }}"
+        mode: put
+        object: /testfile.txt
+        src: /home/ansible/testfile.txt
+    - aws_s3_bucket_info:
+        aws_access_key: "{{ AWS_ACCESS_KEY_ID }}"
+        aws_secret_key: "{{ AWS_SECRET_ACCESS_KEY }}"
+      register: result
